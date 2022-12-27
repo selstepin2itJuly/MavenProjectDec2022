@@ -1,5 +1,8 @@
 package pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,4 +43,14 @@ public class DashboardPage {
 		logout.click();
 	}
 	
+	public int getDashboardMenuItemCount()
+	{
+		return 0;
+	}
+	
+	public List<String> getDashboardItemText()
+	{
+		List<String> tmp = new ArrayList<String>();
+		return tmp;
+	}
 }
