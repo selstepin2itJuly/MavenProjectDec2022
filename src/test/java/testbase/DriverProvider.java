@@ -18,7 +18,8 @@ public class DriverProvider {
 		
 	}
 	private static DriverProvider instance = new DriverProvider();
-	
+	public static Properties prop;
+	//private static String URL;
 	public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>()
 			{
 				@Override
@@ -26,8 +27,9 @@ public class DriverProvider {
 				{
 					String config = "./src/main/resources/config/config.properties";
 					FileInputStream inputStream = null;
-					WebDriver driver = null;
-					Properties prop = new Properties();
+				//	WebDriver driver = null;
+					prop = new Properties();
+					//URL = prop.getProperty("url");
 					try {
 						inputStream = new FileInputStream(new File(config));
 						prop.load(inputStream);
@@ -39,29 +41,23 @@ public class DriverProvider {
 					if(prop.getProperty("browser").equalsIgnoreCase("chrome"))
 					{
 						System.setProperty("webdriver.chrome.driver", prop.getProperty("chromeagent"));
-						driver = new ChromeDriver();
+						return new ChromeDriver();
 					}else if(prop.getProperty("browser").equalsIgnoreCase("firefox"))
 					{
 						System.setProperty("webdriver.gecko.driver", prop.getProperty("firefoxagent"));
 						FirefoxOptions opt = new FirefoxOptions();
 						opt.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
-						driver = new FirefoxDriver(opt);
+						return new FirefoxDriver(opt);
 					}else if(prop.getProperty("browser").equalsIgnoreCase("edge"))
 					{
 						System.setProperty("webdriver.edge.driver", prop.getProperty("edgeagent"));
-						driver = new EdgeDriver();
+						return new EdgeDriver();
 					}else
 					{
-						Throwable thr = new Throwable();
-						thr.initCause(null);
+						return null;
 					}
-					driver.manage().window().maximize();
-					//driver.manage().window().setSize(new Dimension(1024, 768));
-					driver.get(prop.getProperty("url"));
-					//implicit wait time
-					driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-					return driver;
 					
+										
 				}
 		
 			};
@@ -69,7 +65,11 @@ public class DriverProvider {
 	{
 		return instance;
 	}
-	
+
+	public static String getURL() 
+	{
+		return prop.getProperty("url");
+	}
 	
 	public WebDriver getDriver() {
 		return driver.get();

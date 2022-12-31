@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 
+//@Test(singleThreaded=true)
 public class MyInfoTest extends Base {
   @Test(priority=1, description="Verify My info menu count", enabled=true)
   public void myInfoMenuItemCount() throws IOException {
-	  
+	  lp.enterUsername(test.username);
+	  lp.enterPassword(test.password);
+	  lp.clickOnLoginButton();
+	  mip.clickOnMyInfo();
 	  int a =mip.getItemCountMyInfo();
 	  TestUtility.attacheSceenshot();
 	  Assert.assertEquals(a, 11);
@@ -25,6 +27,10 @@ public class MyInfoTest extends Base {
   
   @Test(priority=2, description="My Info Menu Text validation")
   public void myInfoMenuItemText() throws IOException {
+	  lp.enterUsername(test.username);
+	  lp.enterPassword(test.password);
+	  lp.clickOnLoginButton();
+	  mip.clickOnMyInfo();
 	   List<String> act = mip.getSideMenuTextMyInfo();
 	   List<String> exp = new ArrayList<String>();
 	   exp.add("Personal Details");
@@ -48,17 +54,7 @@ public class MyInfoTest extends Base {
 	   sa.assertAll();
 	   TestUtility.attacheSceenshot();
 	   }
-  @BeforeClass
-  public void beforeMethod() {
-	  DriverProvider.getInstance().getDriver();
-	  lp.enterUsername(test.username);
-	  lp.enterPassword(test.password);
-	  lp.clickOnLoginButton();
-	  mip.clickOnMyInfo();
-  }
 
-  @AfterClass
-  public void afterMethod() {
-  }
 
+ 
 }

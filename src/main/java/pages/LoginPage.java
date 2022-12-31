@@ -24,18 +24,21 @@ public class LoginPage {
 	@FindBy(css="[type='submit']")
 	private WebElement loginButton;
 	
-	public void enterUsername(String user)
+	public LoginPage enterUsername(String user)
 	{
-		username.sendKeys(user); 
+		username.sendKeys(user);
+		return this;
 	}
 	
-	public void enterPassword(String pass)
+	public LoginPage enterPassword(String pass)
 	{
 		password.sendKeys(pass);
+		return this;
 	}
 	
-	public void clickOnLoginButton()
+	public LoginPage clickOnLoginButton()
 	{
 		loginButton.click();
+		return this;
 	}
 }
